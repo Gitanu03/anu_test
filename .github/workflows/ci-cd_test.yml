@@ -8,9 +8,15 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: runner1
 
     steps:
     - uses: actions/checkout@v3
+  
+    - uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-region: us-east-1
+        role-to-assume: arn:aws:iam::823115511489:role/Tophat_github_access
+          
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
